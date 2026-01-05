@@ -32,6 +32,13 @@
                   <div class="sidebar-item contact-form">
                     <div class="sidebar-heading">
                       <h2>Send us a message</h2>
+                      {% for error in form.name.errors %}
+                      <h6 style="color: red">{{ error }}</h2>
+                      {% endfor %}
+
+                      {% for error in form.non_field_errors %}
+                      <h6 style="color: purple">{{ error }}</h6>
+                      {% endfor %}
                     </div>
                     <div class="content">
                       <form id="contact" action="" method="post">
@@ -39,22 +46,22 @@
                         <div class="row">
                           <div class="col-md-6 col-sm-12">
                             <fieldset>
-                              <input name="name" type="text" id="name" placeholder="Your name" required="">
+                              {{ form.name }}
                             </fieldset>
                           </div>
                           <div class="col-md-6 col-sm-12">
                             <fieldset>
-                              <input name="email" type="text" id="email" placeholder="Your email" required="">
+                              {{ form.email }}
                             </fieldset>
                           </div>
                           <div class="col-md-12 col-sm-12">
                             <fieldset>
-                              <input name="subject" type="text" id="subject" placeholder="Subject">
+                              {{ form.subject }}
                             </fieldset>
                           </div>
                           <div class="col-lg-12">
                             <fieldset>
-                              <textarea name="message" rows="6" id="message" placeholder="Your Message" required=""></textarea>
+                              {{ form.body }}
                             </fieldset>
                           </div>
                           <div class="col-lg-12">
