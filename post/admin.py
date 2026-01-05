@@ -1,9 +1,13 @@
 from django.contrib import admin
 
-from .models import Article, Category
+from .models import Article, Category, Comment
 
 
 # admin.site.register(Article)
+
+
+class CommentInline(admin.TabularInline):
+    model = Comment
 
 
 @admin.register(Article)
@@ -11,6 +15,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = ["title", "get_body", "created_at"]
     search_fields = ["title"]
     list_filter = ["created_at", "is_published"]
+    inlines = [CommentInline]
     prepopulated_fields = {"slug": ("title",)} 
 
     def get_body(self, obj):

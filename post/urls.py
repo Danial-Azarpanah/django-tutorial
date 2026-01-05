@@ -5,4 +5,5 @@ from . import views
 
 urlpatterns = [
     path("detail/<str:slug>/", views.BlogDetail.as_view(), name='blog-detail'),
+    path("comment/delete/<int:id>/", views.CommentDelete.as_view(), name='delete-comment'),
 ]

@@ -37,3 +37,17 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE, verbose_name="نویسنده")
+    article = models.ForeignKey(Article, related_name="comments", on_delete=models.CASCADE, verbose_name="مقاله")
+    body = models.TextField(verbose_name="متن")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "کامنت"
+        verbose_name_plural = "کامنت‌ها"
+    
+    def __str__(self):
+        return f"{self.article.title}: {self.body[:30]}"
