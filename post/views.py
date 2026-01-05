@@ -1,10 +1,13 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import DetailView, View
+
+from.models import Article
 
 
-def say_hello(request):
-    # return HttpResponse("Hello world")
-    return render(
-        request,
-        "post/index.html",
-        context={"name": "Danial", "age": 22, "scores": [20, 14, 10, 16]}
-    )
+# class BlogDetail(DetailView):
+#     model = Article
+#     template_name = "post/detail.html"
+class BlogDetail(View):
+    def get(self, request, slug):
+        object = get_object_or_404(Article, slug=slug)
+        return render(request, "post/detail.html", {"object": object})
