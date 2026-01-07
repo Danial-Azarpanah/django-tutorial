@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from django.contrib import messages
 
 from .models import Info, Message
 from .forms import ContactForm
@@ -20,6 +21,7 @@ class Contact(View):
             #     body=form.cleaned_data["body"],
             # )
             form.save()
+            messages.success(request, "پیام شما با موفقیت ارسال شد")
         # info = Info.objects.last()
         # return render(request, "info/contact.html", {"info": info, "form": form})
         return redirect("contact")
