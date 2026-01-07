@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, View
 
-from.models import Article, Comment
+from.models import Article, Comment, Category
 
 
 # class BlogDetail(DetailView):
@@ -19,6 +19,18 @@ class BlogDetail(View):
             body=request.POST.get("message"),
         )
         return redirect("blog-detail", slug=slug)
+
+
+class BlogList(View):
+    def get(self, request):
+        articles = Article.objects.order_by("-created_at").prefetch_related("comments").select_related("author")
+        top_3_articles = Article.objects.order_by("-view_count")[:3]
+        categories = Category.objects.all()
+        return render(request, "post/list.html", {
+            "articles": articles,
+            "top_articles": top_3_articles, 
+            "categories": categories}
+            )
 
 
 class CommentDelete(View):
