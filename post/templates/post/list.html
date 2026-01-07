@@ -77,6 +77,9 @@
                     <form id="search_form" name="gs" method="GET" action="">
                       <input type="text" name="q" class="searchText"
                        placeholder="type to search..." autocomplete="on" value="{{ request.GET.q }}">
+                       {% if request.GET.category %}
+                        <input type="hidden" name="category" value="{{ request.GET.category }}">
+                       {% endif %}
                     </form>
                   </div>
                 </div>
@@ -105,7 +108,7 @@
                     <div class="content">
                       <ul>
                         {% for category in categories %}
-                          <li><a href="?category={{ category.slug }}">- {{ category.title }}</a></li>
+                          <li><a href="?category={{ category.slug }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">- {{ category.title }}</a></li>
                         {% endfor %}
                       </ul>
                     </div>
