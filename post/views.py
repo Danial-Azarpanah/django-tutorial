@@ -27,6 +27,9 @@ class BlogList(View):
         q = request.GET.get("q")
         if q:
             articles = articles.filter(title__icontains=q)
+        category = request.GET.get("category")
+        if category:
+            articles = articles.filter(category__slug=category)
         top_3_articles = Article.objects.order_by("-view_count")[:3]
         categories = Category.objects.all()
         return render(request, "post/list.html", {
