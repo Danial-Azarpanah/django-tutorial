@@ -23,7 +23,10 @@ class BlogDetail(View):
 
 class BlogList(View):
     def get(self, request):
-        articles = Article.objects.order_by("-created_at").prefetch_related("comments").select_related("author")
+        articles = Article.objects.select_related("author").prefetch_related("comments").order_by("-created_at")
+        q = request.GET.get("q")
+        if q:
+            articles = articles.filter(title__icontains=q)
         top_3_articles = Article.objects.order_by("-view_count")[:3]
         categories = Category.objects.all()
         return render(request, "post/list.html", {
