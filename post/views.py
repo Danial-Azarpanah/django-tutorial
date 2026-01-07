@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, View
+from django.core.paginator import Paginator
 
 from.models import Article, Comment, Category
 
@@ -32,10 +33,16 @@ class BlogList(View):
             articles = articles.filter(category__slug=category)
         top_3_articles = Article.objects.order_by("-view_count")[:3]
         categories = Category.objects.all()
+
+        paginator = Paginator(articles, 1)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
+        
         return render(request, "post/list.html", {
-            "articles": articles,
             "top_articles": top_3_articles, 
-            "categories": categories}
+            "categories": categories,
+            "page_obj": page_obj},
             )
 
 
