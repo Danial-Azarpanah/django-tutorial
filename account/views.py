@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 
 from .forms import RegisterForm, LoginForm
 
@@ -36,7 +36,12 @@ class Login(View):
                 login(request, user)
                 return redirect("home")
         return redirect("login")
-            
 
 
+class Logout(View):
+    def get(self, request):
+        if not request.user.is_authenticated:
+            return redirect("home")
+        logout(request)
+        return redirect("home")
             
