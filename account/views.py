@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth import login, authenticate, logout
 
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, ProfileForm
 
 
 class Register(View):
@@ -44,4 +44,20 @@ class Logout(View):
             return redirect("home")
         logout(request)
         return redirect("home")
+
+
+class Profile(View):
+    def get(self, request):
+        if not request.user.is_authenticated:
+            return redirect("login")
+        form = ProfileForm(instance=request.user)
+        return render(request, "account/profile.html", {"form": form})
+    
+    def post(self, request):
+        form = ProfileForm(data=request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+        print(form.errors)
+        return redirect("profile")
             
