@@ -21,3 +21,12 @@ class RegisterForm(forms.ModelForm):
         confirm_password = self.cleaned_data.get("confirm_password")
         if password != confirm_password:
             raise ValidationError("گذرواژه و تایید گذرواژه یکسان نیستند")
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={"placeholder": "Username"})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
+    )
