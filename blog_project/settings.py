@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "home",
     "post",
     "info",
+    "account",
 ]
 
 MIDDLEWARE = [
